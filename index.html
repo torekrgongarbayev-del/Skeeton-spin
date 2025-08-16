@@ -65,3 +65,74 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 15px #0f0;
+    }
+    button:disabled {
+      background: #555;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎯 SKELETON SPIN</h1>
+  <p>Крути и получи свой путь</p>
+
+  <div class="wheel-container">
+    <div class="pointer"></div>
+    <div class="wheel" id="wheel"></div>
+  </div>
+
+  <button id="spin">КРУТИТЬ</button>
+
+  <script>
+    const prizes = [
+      "Пусто",
+      "Скример",
+      "WhatsApp",
+      "Telegram",
+      "Instagram",
+      "Ты проиграл"
+    ];
+
+    const colors = ["#f00", "#0f0", "#00f", "#ff0", "#f0f", "#0ff"];
+    const spinBtn = document.getElementById("spin");
+    const wheel = document.getElementById("wheel");
+    let canSpin = true;
+
+    // Показать сектора
+    const conicGradient = colors.map((color, i) => {
+      const start = (i * 60).toFixed(1);
+      const end = ((i + 1) * 60).toFixed(1);
+      return `${color} ${start}% ${end}%`;
+    }).join(", ");
+    wheel.style.background = `conic-gradient(${conicGradient})`;
+
+    spinBtn.addEventListener("click", () => {
+      if (!canSpin) return;
+      canSpin = false;
+      spinBtn.disabled = true;
+
+      const spins = 5; // минимум 5 оборотов
+      const random = Math.floor(Math.random() * 6);
+      const deg = 360 * spins + (360 / 6) * random;
+
+      wheel.style.transform = `rotate(${deg}deg)`;
+
+      setTimeout(() => {
+        const result = prizes[random];
+        alert(`Результат: ${result}`);
+        
+        if (result === "Telegram") window.location.href = "https://t.me/quantum667";
+        if (result === "WhatsApp") window.location.href = "https://wa.me/77770645708";
+        if (result === "Instagram") window.location.href = "https://instagram.com/tore_krg";
+        if (result === "Скример") window.location.href = "https://t.me/quantum667"; // или вставь ссылку на скример
+
+        canSpin = true;
+        spinBtn.disabled = false;
+      }, 4000);
+    });
+  </script>
+</body>
+</html>
