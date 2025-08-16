@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,13 @@
       overflow: hidden;
     }
     h1 {
-      text-shadow: 0 0 10px #0f0;
+      font-size: 2.5rem;
+      text-shadow: 0 0 10px #0f0, 0 0 20px #00f;
+      margin: 0;
+    }
+    p {
+      color: #ddd;
+      margin: 10px 0 30px;
     }
     .wheel-container {
       position: relative;
@@ -67,11 +73,17 @@
       cursor: pointer;
       font-weight: bold;
       box-shadow: 0 0 15px #0f0;
+      transition: all 0.3s ease;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #0f0;
     }
     button:disabled {
       background: #555;
       box-shadow: none;
       cursor: not-allowed;
+      transform: none;
     }
   </style>
 </head>
@@ -96,25 +108,16 @@
       "Ты проиграл"
     ];
 
-    const colors = ["#f00", "#0f0", "#00f", "#ff0", "#f0f", "#0ff"];
     const spinBtn = document.getElementById("spin");
     const wheel = document.getElementById("wheel");
     let canSpin = true;
-
-    // Показать сектора
-    const conicGradient = colors.map((color, i) => {
-      const start = (i * 60).toFixed(1);
-      const end = ((i + 1) * 60).toFixed(1);
-      return `${color} ${start}% ${end}%`;
-    }).join(", ");
-    wheel.style.background = `conic-gradient(${conicGradient})`;
 
     spinBtn.addEventListener("click", () => {
       if (!canSpin) return;
       canSpin = false;
       spinBtn.disabled = true;
 
-      const spins = 5; // минимум 5 оборотов
+      const spins = 5;
       const random = Math.floor(Math.random() * 6);
       const deg = 360 * spins + (360 / 6) * random;
 
@@ -125,9 +128,9 @@
         alert(`Результат: ${result}`);
         
         if (result === "Telegram") window.location.href = "https://t.me/quantum667";
-        if (result === "WhatsApp") window.location.href = "https://wa.me/77770645708";
+        if (result === "WhatsApp") window.location.href = "https://wa.me/message/WIU2BGEBDKSNN1";
         if (result === "Instagram") window.location.href = "https://instagram.com/tore_krg";
-        if (result === "Скример") window.location.href = "https://t.me/quantum667"; // или вставь ссылку на скример
+        if (result === "Скример") window.location.href = "https://t.me/quantum667";
 
         canSpin = true;
         spinBtn.disabled = false;
