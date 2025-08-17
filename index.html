@@ -40,7 +40,7 @@
       border-radius: 50%;
       border: 3px solid #fff;
       box-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
-      transition: transform 4s cubic-bezier(0.1, 0.7, 0.1, 1);
+      transition: transform 6s cubic-bezier(0.1, 0.7, 0.1, 1); /* 6 секунд вращения */
     }
     .pointer {
       position: absolute;
@@ -91,38 +91,38 @@
   <button id="spin">КРУТИТЬ</button>
 
   <script>
-    // Настоящие шансы: x5 — 5%, x3 — 10%, x2 — 20%, x1 — 25%, x0.5 — 25%, x0 — 15%
+    // Шансы: x5 — 7.5%, x3 — 7.5%, x2 — 17.5%, x1 — 2.5%, x0.5 — 2.5%, x0 — 62.5%
     const prizes = [
-      "x5", "x5", "x5", "x5", "x5",           // 5% шанс
-      "x3", "x3", "x3", "x3", "x3",           // 10%
-      "x3", "x3", "x3", "x3", "x3",
-      "x2", "x2", "x2", "x2", "x2",           // 20%
-      "x2", "x2", "x2", "x2", "x2",
-      "x2", "x2", "x2", "x2", "x2",
-      "x2", "x2", "x2", "x2", "x2",
-      "x1", "x1", "x1", "x1", "x1",           // 25%
-      "x1", "x1", "x1", "x1", "x1",
-      "x1", "x1", "x1", "x1", "x1",
-      "x1", "x1", "x1", "x1", "x1",
-      "x0.5", "x0.5", "x0.5", "x0.5", "x0.5", // 25%
-      "x0.5", "x0.5", "x0.5", "x0.5", "x0.5",
-      "x0.5", "x0.5", "x0.5", "x0.5", "x0.5",
-      "x0.5", "x0.5", "x0.5", "x0.5", "x0.5",
-      "x0", "x0", "x0", "x0", "x0",           // 15%
-      "x0", "x0", "x0", "x0", "x0",
-      "x0", "x0", "x0", "x0", "x0",
-      "x0", "x0", "x0", "x0", "x0"
+      "x5", "x5", "x5", "x5", "x5", "x5", "x5", "x5", "x5",           // 7.5% → 9 из 120
+      "x3", "x3", "x3", "x3", "x3", "x3", "x3", "x3", "x3", "x3",     // 7.5% → 9 из 120
+      "x2", "x2", "x2", "x2", "x2", "x2", "x2", "x2", "x2", "x2",     // 17.5% → 21 из 120
+      "x2", "x2", "x2", "x2", "x2", "x2", "x2", "x2", "x2", "x2",
+      "x2", "x2", "x2", "x2", "x2", "x2", "x2", "x2", "x2", "x2",
+      "x1", "x1", "x1", "x1", "x1", "x1", "x1", "x1", "x1", "x1",     // 2.5% → 3 из 120
+      "x0.5", "x0.5", "x0.5", "x0.5", "x0.5", "x0.5", "x0.5", "x0.5", // 2.5% → 3 из 120
+      "x0.5", "x0.5", "x0.5", "x0.5", "x0.5", "x0.5", "x0.5", "x0.5",
+      "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0",     // 62.5% → 75 из 120
+      "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0",
+      "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0",
+      "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0",
+      "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0",
+      "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0",
+      "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0",
+      "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0",
+      "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0", "x0"
     ];
 
-    const colors = ["#f00", "#0f0", "#00f", "#ff0", "#0ff", "#aaa"];
+    const colors = [
+      "#f00", "#0f0", "#ff0", "#00f", "#0ff", "#aaa", "#f0f", "#000", "#ffff00", "#00ffff", "#ff00ff", "#ffcc00"
+    ];
     const spinBtn = document.getElementById("spin");
     const wheel = document.getElementById("wheel");
     let canSpin = true;
 
-    // Создаём градиент (6 секторов)
+    // Создаём градиент (18 секторов)
     const conicGradient = colors.map((color, i) => {
-      const start = (i * 60).toFixed(1);
-      const end = ((i + 1) * 60).toFixed(1);
+      const start = (i * 20).toFixed(1);
+      const end = ((i + 1) * 20).toFixed(1);
       return `${color} ${start}% ${end}%`;
     }).join(", ");
     wheel.style.background = `conic-gradient(${conicGradient})`;
@@ -135,7 +135,7 @@
       const spins = 5;
       const randomIndex = Math.floor(Math.random() * prizes.length);
       const result = prizes[randomIndex];
-      const deg = 360 * spins + (360 / 6) * (randomIndex % 6);
+      const deg = 360 * spins + (360 / 18) * (randomIndex % 18);
 
       wheel.style.transform = `rotate(${deg}deg)`;
 
@@ -143,7 +143,7 @@
         alert(`🎰 ТЫ ВЫИГРАЛ: ${result}!`);
         canSpin = true;
         spinBtn.disabled = false;
-      }, 4000);
+      }, 6000); // 6 секунд вращения
     });
   </script>
 </body>
